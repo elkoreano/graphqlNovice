@@ -5,16 +5,16 @@ import { useState } from 'react'
 // import './App.css'
 
 // New modules
-import { ApolloClient, inMemoryCache, ApolloProvider, useLazyQuery, gql } from '@apollo/client';
-import { Container, Row, Form, Button } from "react-bootstrap"
+import { ApolloClient, InMemoryCache, ApolloProvider, useLazyQuery, gql, } from '@apollo/client';
+import { Container, Row, Form, Button, Col } from "react-bootstrap"
 
 // Random stuff imported by itself xd
-import e from 'express';
+// import e from 'express';
 
 
 const client = new ApolloClient({
   uri: 'http://localhost:4000/graphql',
-  cache: new inMemoryCache(),
+  cache: new InMemoryCache(),
 })
 
 const HELLO_QUERY = gql`
@@ -24,7 +24,8 @@ query Hello($message: String!) {
 `;
 
 // This function was created
-function hello() {
+// React component names must start with an uppercase letter. React Hook names must start with the word "use".
+function Hello() {
   const [message, setMessage] = useState("");
   const [getGreating, {loading, error, data}] = useLazyQuery(HELLO_QUERY);
 
@@ -40,7 +41,7 @@ function hello() {
     <div>
       <Form onSubmit={handleSubmit}>
       <Form.Group controlID= "formMessage">
-      <Form.Control type= "text" value={message} onChange={(e) => setMessage(e.target.value)} placeholder="Escribe un mensaje"
+      <Form.Control type= "text" value={message} onChange={(e) => setMessage(e.target.value)} placeholder="Escribe un nombre"
       />
       </Form.Group>
       <Button className="nt-2" variant="primary" type="submit">
@@ -55,31 +56,20 @@ function hello() {
 
 // This was changed 
 function App() {
-  const [count, setCount] = useState(0)
+  // const [count, setCount] = useState(0)
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+   
+   <ApolloProvider client={client}>
+    <Container className='my-5'>
+    <Row>
+    <Col xs={12} md={{ span: 6, offset: 3 }}>
+      <h1>Saludo para futuros clientes de X Cakes</h1>
+      <Hello/>
+      </Col>
+      </Row>
+      </Container>
+      </ApolloProvider>
   )
 }
 
