@@ -13,7 +13,8 @@ const typeDefs = gql`
 const resolvers = {
   Query: {
     hello: (_, { message }) => {
-        return `¡Hola, ${message}! Un saludo por parte del profe `;
+        return `¡Hola, ${message}! Estate pendiente para los nuevos pasteles que se vienen
+        en X Cakes `;
       },
   },
 };
@@ -32,7 +33,7 @@ async function startApolloServer() {
   server.applyMiddleware({ app, path: '/graphql' });
 
   // Sirve la aplicación de React desde la carpeta "saludofront-app"
-   const reactAppPath = path.join(__dirname, 'saludofront-app', 'dist');
+   const reactAppPath = path.join(__dirname,'../react', 'dist');
     app.use(express.static(reactAppPath));
     app.get('*', (req, res) => {
     res.sendFile(path.join(reactAppPath, 'index.html'));
